@@ -1,18 +1,20 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './screens/HomeScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import JournalScreen from './screens/JournalScreen';
 import NotesScreen from './screens/NotesScreen';
+import TodoScreen from './screens/TodoScreen';
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-        <Stack.Screen name="Notes" component={NotesScreen} options={{ title: 'Notes' }} />
-      </Stack.Navigator>
+      <Tab.Navigator screenOptions={{ headerShown: false, swipeEnabled: true }}>
+        <Tab.Screen name="Journal" component={JournalScreen} />
+        <Tab.Screen name="Notes" component={NotesScreen} />
+        <Tab.Screen name="Todo" component={TodoScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }

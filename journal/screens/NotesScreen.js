@@ -1,31 +1,22 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, FlatList, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 
-export default function NotesScreen() {
-    const [note, setNote] = useState('');
-    const [notesList, setNotesList] = useState([]);
+const notes = [
+    { id: '1', title: 'First Note' },
+    { id: '2', title: 'Second Note' },
+    // Add more notes here
+];
 
-    const addNote = () => {
-        if (note) {
-            setNotesList([...notesList, { key: note }]);
-            setNote('');
-        }
-    };
+export default function NotesScreen({ navigation }) {
+    const renderItem = ({ item }) => (
+        <Text style={styles.note} onPress={() => navigation.navigate('NoteDetail', { noteId: item.id })}>
+            {item.title}
+        </Text>
+    );
 
     return (
         <View style={styles.container}>
-            <TextInput
-                value={note}
-                onChangeText={setNote}
-                placeholder="Write your note here"
-                placeholderTextColor="#8E8E8E"
-                style={styles.input}
-            />
-            <Button title="Add Note" onPress={addNote} color="#1E90FF" />
-            <FlatList
-                data={notesList}
-                renderItem={({ item }) => <Text style={styles.note}>{item.key}</Text>}
-            />
+            <FlatList data={notes} renderItem={renderItem} keyExtractor={(item) => item.id} />
         </View>
     );
 }
@@ -34,21 +25,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1E1E1E',
-        padding: 20,
-    },
-    input: {
-        height: 40,
-        borderColor: '#444444',
-        borderWidth: 1,
-        color: '#FFFFFF',
-        paddingHorizontal: 10,
-        marginBottom: 10,
     },
     note: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        paddingVertical: 5,
+        padding: 20,
+        fontSize: 18,
+        color: 'white',
+        borderBottomColor: '#444',
         borderBottomWidth: 1,
-        borderBottomColor: '#444444',
     },
 });

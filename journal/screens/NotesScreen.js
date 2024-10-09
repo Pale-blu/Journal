@@ -1,36 +1,25 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-const notes = [
-    { id: '1', title: 'First Note' },
-    { id: '2', title: 'Second Note' },
-    // Add more notes here
-];
-
-export default function NotesScreen({ navigation }) {
-    const renderItem = ({ item }) => (
-        <Text style={styles.note} onPress={() => navigation.navigate('NoteDetail', { noteId: item.id })}>
-            {item.title}
-        </Text>
-    );
-
+const NotesScreen = () => {
     return (
         <View style={styles.container}>
-            <FlatList data={notes} renderItem={renderItem} keyExtractor={(item) => item.id} />
+            <Text style={styles.text}>Notes Screen</Text>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#1E1E1E',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#1f1f1f',
     },
-    note: {
-        padding: 20,
-        fontSize: 18,
-        color: 'white',
-        borderBottomColor: '#444',
-        borderBottomWidth: 1,
+    text: {
+        color: '#fff',
+        fontSize: 20,
     },
 });
+
+export default NotesScreen;

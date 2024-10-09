@@ -1,18 +1,18 @@
 import moment from 'moment';
 
-// Returns an array of week days (Monday to Sunday) and highlights today's date
-export function getWeekDaysWithDates() {
-    const week = [];
+// Pass 'short' as a parameter to get short day names
+export const getWeekDaysWithDates = (format = 'long') => {
+    const weekDays = [];
     const today = moment();
 
     for (let i = 0; i < 7; i++) {
         const day = moment().startOf('week').add(i, 'days');
-        week.push({
-            day: day.format('dddd'),  // e.g. "Monday"
-            date: day.format('MMM D'), // e.g. "Sep 29"
+        weekDays.push({
+            day: format === 'short' ? day.format('ddd') : day.format('dddd'),  // 'Mon', 'Tue', etc.
+            date: day.format('D'),
             isToday: day.isSame(today, 'day'),
         });
     }
 
-    return week;
-}
+    return weekDays;
+};

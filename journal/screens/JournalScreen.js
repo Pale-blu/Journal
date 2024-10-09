@@ -1,32 +1,87 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import Header from '../components/Header';
-import DayCard from '../components/DayCard';
-import { getWeekDaysWithDates } from '../utils/getDates'; // utility function to get dates
+import { View, Text, StyleSheet } from 'react-native';
+import { getWeekDaysWithDates } from '../utils/getDates';
 
-export default function JournalScreen() {
-    const weekDays = getWeekDaysWithDates(); // Get an array of days with dates
+const JournalScreen = () => {
+    const weekDays = getWeekDaysWithDates('short');  // Use short day names
 
     return (
         <View style={styles.container}>
-            <Header title="Journal" />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.daysContainer}>
+            {/* Navbar */}
+            <View style={styles.navbar}>
+                <Text style={styles.title}>Journal</Text>
+                <Text style={styles.icon}>📅</Text>
+            </View>
+
+            {/* Scheduler without side swipe */}
+            <View style={styles.scheduler}>
                 {weekDays.map((day, index) => (
-                    <DayCard key={index} day={day.day} date={day.date} isToday={day.isToday} />
+                    <View
+                        key={index}
+                        style={[
+                            styles.dayCard,
+                            day.isToday ? styles.todayCard : null,
+                        ]}
+                    >
+                        <Text style={day.isToday ? styles.todayText : styles.dayText}>{day.day}</Text>
+                        <Text style={day.isToday ? styles.todayText : styles.dateText}>{day.date}</Text>
+                    </View>
                 ))}
-            </ScrollView>
-            {/* Below you can add more content specific to the journal page */}
+            </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#1E1E1E',
+        backgroundColor: '#1f1f1f',  // Dark background
     },
-    daysContainer: {
+    navbar: {
+        height: 60,
+        backgroundColor: '#333',
         flexDirection: 'row',
-        paddingVertical: 20,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    title: {
+        color: '#fff',
+        fontSize: 20,
+    },
+    icon: {
+        fontSize: 24,
+        color: '#fff',
+    },
+    scheduler: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 10,
+        marginTop: 20,
+    },
+    dayCard: {
+        width: '13%',  // Ensure 7 cards fit on the screen
+        padding: 10,
+        borderRadius: 8,
+        backgroundColor: '#444',
+        alignItems: 'center',
+    },
+    todayCard: {
+        borderColor: '#fff',
+        borderWidth: 2,
+    },
+    dayText: {
+        color: '#aaa',
+        fontSize: 16,
+    },
+    dateText: {
+        color: '#ccc',
+        fontSize: 14,
+    },
+    todayText: {
+        color: '#fff',
+        fontWeight: 'bold',
     },
 });
+
+export default JournalScreen;
